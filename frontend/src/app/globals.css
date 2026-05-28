@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #FFD700;
+  --navy: #1A2238;
+  --cream: #FFFDF0;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--navy);
+  background: var(--cream);
+}
+
+.btn-primary {
+  @apply bg-gold-400 text-navy-500 font-bold py-3 px-6 rounded-lg
+         hover:bg-gold-500 transition-colors duration-200 shadow-md;
+}
+
+.btn-secondary {
+  @apply bg-navy-500 text-gold-400 font-bold py-3 px-6 rounded-lg
+         hover:bg-navy-600 transition-colors duration-200 shadow-md
+         border-2 border-gold-400;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-lg border border-gold-100 p-6;
+}
