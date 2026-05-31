@@ -1,25 +1,22 @@
-"""Tiered commission engine — rate DECREASES as sale value rises.
+"""Tiered commission engine — rate INCREASES as sale value rises, per user request.
 
 Schedule:
-    $0 - $500       → 4.5%
-    $501 - $2,000   → 3.5%
-    $2,001 - $10,000 → 2.5%
-    $10,001 - $50,000 → 1.75%
-    $50,001+        → 1.0%
-
-On a $100k collection: platform earns $1,000. Heritage would charge $15,000.
-The seller keeps $14,000 more. Both win.
+    $0 - $500       → 1.0%
+    $501 - $2,000   → 2.0%
+    $2,001 - $10,000 → 3.0%
+    $10,001 - $50,000 → 4.0%
+    $50,001+        → 5.0%
 """
 
 from dataclasses import dataclass
 
 
 COMMISSION_TIERS = [
-    (500,       0.045),
-    (2_000,     0.035),
-    (10_000,    0.025),
-    (50_000,    0.0175),
-    (float("inf"), 0.010),
+    (500,       0.010),
+    (2_000,     0.020),
+    (10_000,    0.030),
+    (50_000,    0.040),
+    (float("inf"), 0.050),
 ]
 
 

@@ -32,6 +32,7 @@ class User(Base):
     # Persona
     user_type = Column(SAEnum(UserType), default=UserType.BUYER, nullable=False)
     acquisition_trigger = Column(String(50), nullable=True)  # inherited, downsizing, organic, etc.
+    age_bracket = Column(String(20), nullable=True)          # '18-24', '25-34', etc.
     
     # Subscription
     tier = Column(SAEnum(SubscriptionTier), default=SubscriptionTier.FREE, nullable=False)

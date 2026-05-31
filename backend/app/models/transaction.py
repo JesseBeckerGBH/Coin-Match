@@ -92,12 +92,19 @@ class EstateEvent(Base):
     id = Column(String(36), primary_key=True)
     user_id = Column(String(36), ForeignKey("users.id"), nullable=True)
     
+    # Source info
     trigger_source = Column(String(50), nullable=False)     # reddit_post, signup_form, scraper_flag
     trigger_url = Column(String(1000), nullable=True)
+    platform = Column(String(50), nullable=True)            # reddit, facebook, craigslist
+    external_username = Column(String(100), nullable=True)
+    
+    # Collection info
     collection_description = Column(Text, nullable=True)
     collection_est_value = Column(Float, nullable=True)
+    raw_data = Column(JSON, nullable=True)                  # Store full scraped JSON
     
     status = Column(String(20), default="new")              # new, contacted, listed, sold
     
     contacted_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
