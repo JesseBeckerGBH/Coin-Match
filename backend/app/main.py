@@ -39,7 +39,7 @@ app = FastAPI(
     description=(
         "AI-powered numismatics marketplace. Connects collectors with estate sellers "
         "through instant AI grading and intelligent matching. "
-        "Lowest fees in the industry: 4.5% → 1.0% tiered commission."
+        "Lowest fees in the industry: 1.0% → 5.0% tiered commission."
     ),
     version="1.0.0",
     docs_url="/docs",

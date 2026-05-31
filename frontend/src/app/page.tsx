@@ -111,9 +111,9 @@ export default function Home() {
             </div>
             <div className="card text-center border-green-300 bg-green-50 ring-2 ring-green-400">
               <h3 className="font-bold text-green-700 text-lg mb-2">CoinMatch ✨</h3>
-              <p className="text-4xl font-bold text-green-600 mb-1">$1,000</p>
-              <p className="text-green-500">in fees (1%)</p>
-              <p className="text-sm text-green-600 mt-2 font-bold">Seller gets: $99,000</p>
+              <p className="text-4xl font-bold text-green-600 mb-1">$5,000</p>
+              <p className="text-green-500">in fees (5%)</p>
+              <p className="text-sm text-green-600 mt-2 font-bold">Seller gets: $95,000</p>
             </div>
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-center text-navy-300 mt-8">
-            Estate sellers always free — pay only a small commission on successful sales (4.5% → 1%)
+            Estate sellers always free — pay only a small commission on successful sales (starting at 1%)
           </p>
         </div>
       </section>

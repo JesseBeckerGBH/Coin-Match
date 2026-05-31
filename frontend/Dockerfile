@@ -3,8 +3,8 @@ FROM node:18-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json ./
+RUN npm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -20,10 +20,13 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV PORT 3000
 
-COPY --from=builder /app/public ./public
+# public/ may not exist — use conditional copy
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+
+# Copy public if it exists (won't fail if empty/missing since we have .gitkeep)
+COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 

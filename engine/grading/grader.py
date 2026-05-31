@@ -68,7 +68,7 @@ def grade_coin_images(
 ) -> dict:
     """Grade a coin from its images using Multimodal AI analysis.
     
-    V2: Uses Gemini Multimodal Vision to evaluate luster, strike, and wear.
+    V1: Rule-based grading with image heuristics. ML vision model planned for V2.
     
     Args:
         images: Dict with keys like "obverse", "reverse", "edge", "detail"
@@ -127,11 +127,12 @@ def grade_coin_images(
         "estimated_value": estimated_value,
         "notes": notes,
         "ai_metadata": {
-            "model": "Gemini-1.5-Pro-Multimodal",
+            "model": "rule-based-v1",
             "analyzed_at": datetime.utcnow().isoformat(),
             "image_count": image_count,
             "has_edge": has_edge,
-            "has_detail": has_detail
+            "has_detail": has_detail,
+            "note": "V1 heuristic grading — ML vision model coming in V2"
         }
     }
 
