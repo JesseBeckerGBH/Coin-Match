@@ -57,7 +57,7 @@ so high-value estate sales pay the headline 1% rate.
 - **Cache:** Redis
 - **Payments:** Stripe Connect (marketplace payouts)
 - **Deployment:** Railway (two services: backend Docker + frontend Docker, plus Postgres + Redis plugins)
-- **AI Grading:** Claude Sonnet 4.6 Vision (Anthropic API), heuristic fallback for local dev
+- **AI Grading:** Claude Opus 4.7 Vision (Anthropic API), heuristic fallback for local dev
 
 ## 📂 Project Structure
 

@@ -1,4 +1,4 @@
-"""AI Coin Grading Engine — Claude Sonnet 4.6 Multimodal Vision.
+"""AI Coin Grading Engine — Claude Opus 4.7 Multimodal Vision.
 
 Sends the seller's uploaded photos (obverse, reverse, optional edge + detail)
 to Anthropic's Claude with a structured prompt focused on the Sheldon scale,
@@ -55,7 +55,7 @@ VALUE_ESTIMATES = {
     },
 }
 
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6")
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-4-7")
 UPLOAD_ROOT = Path(os.getenv("UPLOAD_DIR", "static/uploads")).resolve()
 
 
@@ -133,7 +133,7 @@ def _grade_with_claude(
     year: Optional[int],
     api_key: str,
 ) -> dict:
-    """Call Claude Sonnet 4.6 with the coin images and parse the structured grade."""
+    """Call Claude Opus 4.7 with the coin images and parse the structured grade."""
     from anthropic import Anthropic
 
     client = Anthropic(api_key=api_key)

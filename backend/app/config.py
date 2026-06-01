@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     # Claude Vision (AI coin grader)
     ANTHROPIC_API_KEY: Optional[str] = None
-    CLAUDE_MODEL: str = "claude-sonnet-4-6"
+    CLAUDE_MODEL: str = "claude-opus-4-7"
 
     # Whop (subscriptions — Pro Collector $19/mo and Dealer $99/mo).
     # Whop replaces Stripe Checkout for these tiers. Stripe Connect is still
