@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     STRIPE_WEBHOOK_SECRET: str = ""
     STRIPE_CONNECT_CLIENT_ID: Optional[str] = None
 
+    # Claude Vision (AI coin grader)
+    ANTHROPIC_API_KEY: Optional[str] = None
+    CLAUDE_MODEL: str = "claude-sonnet-4-6"
+
     # CORS
     CORS_ORIGINS: str = "http://localhost:3000"
 

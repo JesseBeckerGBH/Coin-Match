@@ -2,7 +2,7 @@
 
 **AI-Powered Numismatics Marketplace** — The smartest way to buy and sell coins.
 
-CoinMatch connects coin collectors with estate sellers through instant AI grading and intelligent buyer-seller matching. The lowest fees in numismatics: **4.5% → 1.0%** tiered commission vs Heritage's 35%.
+CoinMatch connects coin collectors with estate sellers through instant AI grading and intelligent buyer-seller matching. The lowest fees in numismatics: **3% → 1%** tiered commission ($10 minimum) vs Heritage's 25-35%.
 
 ## 🎯 The Problem We Solve
 
@@ -28,13 +28,18 @@ CoinMatch fixes all of this with AI grading, direct matching, and transparent ti
 - **Transparent fees** — tiered commission only on successful sale
 
 ### Tiered Commission Schedule
-| Sale Value | Commission | On $100k sale |
-|-----------|-----------|--------------|
-| $0 – $500 | 4.5% | — |
-| $501 – $2,000 | 3.5% | — |
-| $2,001 – $10,000 | 2.5% | — |
-| $10,001 – $50,000 | 1.75% | — |
-| $50,001+ | **1.0%** | **$1,000** (vs Heritage's $15,000) |
+
+Sellers pay the **greater of $10 or the tiered rate**. The $10 floor covers
+fixed processing + AI grading costs on tiny sales; the tiered rate scales down
+so high-value estate sales pay the headline 1% rate.
+
+| Sale Value | Commission Rate | Example Fee |
+|-----------|----------------|-------------|
+| $0 – $500 | 3.0% (min $10) | $15 on a $500 coin |
+| $501 – $2,000 | 2.5% | $50 on a $2,000 coin |
+| $2,001 – $10,000 | 2.0% | $200 on a $10,000 coin |
+| $10,001 – $50,000 | 1.5% | $750 on a $50,000 coin |
+| $50,001+ | **1.0%** | **$1,000** on a $100k sale (vs Heritage's $15,000+) |
 
 ### Subscription Tiers
 | Tier | Price | Benefits |
@@ -51,8 +56,8 @@ CoinMatch fixes all of this with AI grading, direct matching, and transparent ti
 - **Database:** PostgreSQL
 - **Cache:** Redis
 - **Payments:** Stripe Connect (marketplace payouts)
-- **AI Grading:** Rule-based V1 → EfficientNet-B7/ViT V2
-- **Deployment:** Railway (Docker)
+- **Deployment:** Railway (two services: backend Docker + frontend Docker, plus Postgres + Redis plugins)
+- **AI Grading:** Claude Sonnet 4.6 Vision (Anthropic API), heuristic fallback for local dev
 
 ## 📂 Project Structure
 
@@ -112,16 +117,24 @@ JWT_SECRET=<generate at https://generate-secret.vercel.app/64>
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
+# Claude Vision (AI grader)
+ANTHROPIC_API_KEY=sk-ant-...
+
 # Google OAuth (optional)
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 
 # App
 APP_ENV=production
-APP_URL=https://your-domain.com
-CORS_ORIGINS=https://your-domain.com
+APP_URL=https://getcoinmatch.com
+CORS_ORIGINS=https://getcoinmatch.com
 OWNER_EMAIL=jessebecker2021@gmail.com
 PORT=8000
+```
+
+#### Frontend env (second Railway service)
+```env
+NEXT_PUBLIC_API_URL=https://<your-backend-service>.up.railway.app
 ```
 
 ## 📡 API Endpoints

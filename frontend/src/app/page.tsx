@@ -31,8 +31,8 @@ export default function Home() {
         </h1>
         <p className="text-xl md:text-2xl text-gold-200/80 max-w-3xl mx-auto mb-10 leading-relaxed">
           AI-powered grading. Instant buyer matching. The lowest fees in numismatics —
-          starting at just <strong className="text-gold-400">1%</strong>.
-          Heritage charges 35%. We don&apos;t.
+          as low as <strong className="text-gold-400">1%</strong> on big sales.
+          Heritage charges 25-35%. We don&apos;t.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
@@ -111,9 +111,9 @@ export default function Home() {
             </div>
             <div className="card text-center border-green-300 bg-green-50 ring-2 ring-green-400">
               <h3 className="font-bold text-green-700 text-lg mb-2">CoinMatch ✨</h3>
-              <p className="text-4xl font-bold text-green-600 mb-1">$5,000</p>
-              <p className="text-green-500">in fees (5%)</p>
-              <p className="text-sm text-green-600 mt-2 font-bold">Seller gets: $95,000</p>
+              <p className="text-4xl font-bold text-green-600 mb-1">$1,000</p>
+              <p className="text-green-500">in fees (1%)</p>
+              <p className="text-sm text-green-600 mt-2 font-bold">Seller gets: $99,000</p>
             </div>
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-center text-navy-300 mt-8">
-            Estate sellers always free — pay only a small commission on successful sales (starting at 1%)
+            Estate sellers always free — pay only a small commission on successful sales (as low as 1% on $50k+ coins, $10 minimum)
           </p>
         </div>
       </section>
