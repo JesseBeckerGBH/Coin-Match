@@ -34,6 +34,13 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: Optional[str] = None
     CLAUDE_MODEL: str = "claude-sonnet-4-6"
 
+    # Whop (subscriptions — Pro Collector $19/mo and Dealer $99/mo).
+    # Whop replaces Stripe Checkout for these tiers. Stripe Connect is still
+    # used for the coin marketplace transactions between buyers and sellers.
+    WHOP_WEBHOOK_SECRET: str = ""
+    WHOP_PRO_CHECKOUT_URL: str = ""    # Public Whop checkout URL for Pro $19/mo
+    WHOP_DEALER_CHECKOUT_URL: str = ""  # Public Whop checkout URL for Dealer $99/mo
+
     # CORS
     CORS_ORIGINS: str = "http://localhost:3000"
 

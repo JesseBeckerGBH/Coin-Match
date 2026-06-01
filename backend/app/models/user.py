@@ -39,6 +39,8 @@ class User(Base):
     stripe_customer_id = Column(String(255), nullable=True, unique=True)
     stripe_connect_account_id = Column(String(255), nullable=True, unique=True)
     stripe_subscription_id = Column(String(255), nullable=True)
+    whop_user_id = Column(String(255), nullable=True, unique=True, index=True)
+    whop_membership_id = Column(String(255), nullable=True, index=True)
     
     # Profile
     role = Column(String(20), default="user")  # user, admin

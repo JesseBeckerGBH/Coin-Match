@@ -1,4 +1,14 @@
-"""Billing routes — Stripe Connect onboarding, subscriptions, webhooks."""
+"""Billing routes — Stripe Connect (marketplace) + Whop (subscriptions) + webhooks.
+
+Stripe Connect: peer-to-peer coin sales between buyers and sellers. Funds flow
+buyer → platform → seller via Express connected accounts. Required.
+
+Whop: Pro Collector ($19/mo) and Dealer ($99/mo) subscriptions. Replaces what
+used to be Stripe Checkout subscriptions.
+"""
+
+import json
+import logging
 
 import stripe
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -13,8 +23,10 @@ from app.services.auth import get_current_user
 from app.services.stripe_connect import (
     create_connect_account,
     create_onboarding_link,
-    create_subscription_checkout,
 )
+from app.services import whop
+
+log = logging.getLogger(__name__)
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 router = APIRouter(prefix="/api/billing", tags=["billing"])
@@ -61,38 +73,116 @@ def connect_status(user: User = Depends(get_current_user)):
     }
 
 
-# ──────────────────── Subscriptions (Buyers) ────────────────────
+# ──────────────────── Subscriptions (Buyers) — via Whop ────────────────────
 
 @router.post("/subscribe/{tier}")
 def subscribe(
     tier: str,
     user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
 ):
-    """Start a subscription checkout for Pro or Dealer tier."""
+    """Return the Whop checkout URL for the requested tier.
+
+    The frontend redirects the user to this URL. Whop handles payment, account
+    creation, recurring billing, and the customer portal. On success Whop fires
+    a webhook to /api/billing/whop-webhook which flips user.tier here.
+
+    We append metadata so the webhook can map the Whop membership back to the
+    CoinMatch user record.
+    """
     if tier not in ("pro", "dealer"):
         raise HTTPException(status_code=400, detail="Tier must be 'pro' or 'dealer'")
 
-    # Create Stripe customer if needed
-    if not user.stripe_customer_id:
-        customer = stripe.Customer.create(
-            email=user.email,
-            name=user.name,
-            metadata={"user_id": user.id, "platform": "coinmatch"},
-        )
-        user.stripe_customer_id = customer.id
-        db.commit()
-
-    url = create_subscription_checkout(
-        customer_id=user.stripe_customer_id,
-        tier=tier,
-        success_url=f"{settings.APP_URL}/dashboard?subscription=success",
-        cancel_url=f"{settings.APP_URL}/pricing?subscription=cancelled",
+    base_url = (
+        settings.WHOP_PRO_CHECKOUT_URL if tier == "pro"
+        else settings.WHOP_DEALER_CHECKOUT_URL
     )
-    return {"checkout_url": url}
+    if not base_url:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Whop {tier} checkout URL is not configured. Set WHOP_{tier.upper()}_CHECKOUT_URL.",
+        )
+
+    sep = "&" if "?" in base_url else "?"
+    checkout_url = (
+        f"{base_url}{sep}"
+        f"metadata[coinmatch_user_id]={user.id}"
+        f"&metadata[tier]={tier}"
+        f"&email={user.email}"
+    )
+    return {"checkout_url": checkout_url, "provider": "whop"}
 
 
-# ──────────────────── Webhook ────────────────────
+# ──────────────────── Whop Webhook ────────────────────
+
+@router.post("/whop-webhook")
+async def whop_webhook(request: Request, db: Session = Depends(get_db)):
+    """Handle Whop subscription events: activated, deactivated.
+
+    On membership.activated: flip user.tier to pro/dealer based on metadata.
+    On membership.deactivated: drop user back to free.
+    """
+    body = await request.body()
+    webhook_id = request.headers.get("webhook-id", "")
+    webhook_timestamp = request.headers.get("webhook-timestamp", "")
+    webhook_signature = request.headers.get("webhook-signature", "")
+
+    if not whop.verify_signature(webhook_id, webhook_timestamp, webhook_signature, body):
+        raise HTTPException(status_code=401, detail="Invalid Whop webhook signature")
+
+    try:
+        event = json.loads(body)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Malformed JSON body")
+
+    event_type = event.get("type", "")
+    log.info("Whop webhook received: id=%s type=%s", webhook_id, event_type)
+
+    if event_type == "membership.activated":
+        tier = whop.tier_from_event(event)
+        coinmatch_user_id = whop.coinmatch_user_id_from_event(event)
+        whop_user_id = whop.whop_user_id_from_event(event)
+        whop_membership_id = whop.whop_membership_id_from_event(event)
+
+        user = None
+        if coinmatch_user_id:
+            user = db.query(User).filter(User.id == coinmatch_user_id).first()
+        if not user and whop_user_id:
+            user = db.query(User).filter(User.whop_user_id == whop_user_id).first()
+        if not user:
+            log.warning("Whop membership.activated for unknown user: %s", event.get("data", {}))
+            return {"received": True, "matched_user": False}
+
+        if tier == "dealer":
+            user.tier = SubscriptionTier.DEALER
+        elif tier == "pro":
+            user.tier = SubscriptionTier.PRO
+        if whop_user_id:
+            user.whop_user_id = whop_user_id
+        if whop_membership_id:
+            user.whop_membership_id = whop_membership_id
+        db.commit()
+        return {"received": True, "matched_user": True, "tier": user.tier.value}
+
+    if event_type == "membership.deactivated":
+        whop_membership_id = whop.whop_membership_id_from_event(event)
+        whop_user_id = whop.whop_user_id_from_event(event)
+        user = None
+        if whop_membership_id:
+            user = db.query(User).filter(User.whop_membership_id == whop_membership_id).first()
+        if not user and whop_user_id:
+            user = db.query(User).filter(User.whop_user_id == whop_user_id).first()
+        if user:
+            user.tier = SubscriptionTier.FREE
+            user.whop_membership_id = None
+            db.commit()
+            return {"received": True, "matched_user": True, "tier": user.tier.value}
+        return {"received": True, "matched_user": False}
+
+    # Other events (payment.succeeded, refund.created, etc.) — acknowledge but no-op for now.
+    return {"received": True, "event_type": event_type, "action": "ignored"}
+
+
+# ──────────────────── Stripe Webhook (Connect / coin-sale events only) ────────────────────
 
 @router.post("/webhook")
 async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
