@@ -1,7 +1,5 @@
 """
-Novelty Worker
-
-Distinguish truly new math from new applications of legacy math.
+Novelty Worker — Distinguish truly new math from new applications of legacy math.
 Type: hybrid
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("novelty")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the novelty worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the novelty worker."""
     logger.info("Running novelty worker...")
 
     # TODO: Implement novelty logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

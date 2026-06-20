@@ -7,7 +7,7 @@ The CoinMatch Research Engine is a 14-worker pipeline that continuously finds ne
 ## Design Principles
 
 1. **Orchestrator + Workers** — Central coordinator dispatches to specialized workers
-2. **Deterministic benchmarks** — No method enters production without beating baseline on measurable metrics
+2. **Deterministic benchmarks** — No method enters production without beating baseline
 3. **Structured handoffs** — Every worker uses the same input/output envelope
 4. **Separate discovery from judgment** — Finding methods and evaluating them are different jobs
 
@@ -23,35 +23,18 @@ The CoinMatch Research Engine is a 14-worker pipeline that continuously finds ne
 | 6 | Data Requirements | hybrid | Check if we can test this method |
 | 7 | Experiment Design | agentic | Create benchmark plans |
 | 8 | Benchmark Runner | deterministic | Execute offline tests |
-| 9 | Reliability | deterministic + LLM | Audit label quality (Krippendorff's α) |
+| 9 | Reliability | deterministic + LLM | Audit label quality (Krippendorff's Alpha) |
 | 10 | Calibration | deterministic | Turn scores into probabilities |
 | 11 | Fusion | hybrid | Combine evidence streams (Bayesian) |
 | 12 | Promotion Gate | hybrid | Decide promote/reject |
 | 13 | Ticket Writer | agentic | Generate GitHub issues |
 | 14 | Reporting | hybrid | Weekly/monthly digests |
 
-## High-Level Flow
-
-```
-Discover sources → Parse documents → Extract math candidates
-  → Score relevance → Check novelty → Assess data readiness
-    → Design experiments → Run benchmarks
-      → Audit reliability → Calibrate confidence
-        → Fuse evidence → Promotion gate
-          → Write tickets / Generate reports
-```
-
 ## Scoring Model
 
-Candidate score: S = 0.25R + 0.20N + 0.20D + 0.20B + 0.15E
+Candidate score: `S = 0.25R + 0.20N + 0.20D + 0.20B + 0.15E`
 
-- R = relevance score
-- N = novelty score
-- D = data readiness score
-- B = benchmark potential score
-- E = explainability score
-
-A method only proceeds if it passes both a score threshold AND a benchmark threshold.
+- R = relevance, N = novelty, D = data readiness, B = benchmark potential, E = explainability
 
 ## Core Math Stack
 
@@ -65,19 +48,7 @@ A method only proceeds if it passes both a score threshold AND a benchmark thres
 
 ## Implementation Phases
 
-### Phase 1: Skeleton
-- Source registry, scheduler, document ingestion
-- Candidate extraction schema, candidate database
-
-### Phase 2: Research Intelligence
-- Math extraction, relevance, novelty workers
-- Data requirements, experiment design workers
-
-### Phase 3: Benchmark Engine
-- Frozen evaluation dataset
-- Triplet-loss + cosine retrieval baselines
-- Bayesian reranker, calibration, reliability scoring
-
-### Phase 4: Promotion & Operations
-- Promotion gate, ticket writer, weekly reporting
-- Dashboard views, GitHub issue automation
+1. **Skeleton** — Source registry, scheduler, document ingestion, candidate DB
+2. **Research Intelligence** — Math extraction, relevance, novelty, experiment design
+3. **Benchmark Engine** — Frozen eval set, baselines, Bayesian reranker, calibration
+4. **Promotion & Ops** — Promotion gate, ticket writer, reporting, dashboards

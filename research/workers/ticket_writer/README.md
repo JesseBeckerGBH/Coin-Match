@@ -4,19 +4,9 @@
 
 ## Purpose
 
-Convert approved experiments or promotions into GitHub-ready implementation tickets with epics, issues, and acceptance criteria.
+Convert approved experiments into GitHub-ready implementation tickets.
 
-## Inputs
+## Contract
 
-- Experiment and promotion outputs
-
-## Outputs
-
-- Epic title
-- Issue titles and descriptions
-- Acceptance criteria
-
-## Implementation Notes
-
-- Returns a `WorkerResult` envelope (see `docs/architecture/worker-contracts.md`)
-- Uses LLM for reasoning — include prompt from `research/prompts/`
+- Input: Structured payload from orchestrator
+- Output: WorkerResult envelope (see `docs/architecture/worker-contracts.md`)

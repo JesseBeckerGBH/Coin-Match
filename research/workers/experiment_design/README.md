@@ -4,19 +4,9 @@
 
 ## Purpose
 
-Translate a promising method into a concrete benchmark plan with hypothesis, baseline, metrics, and pass/fail thresholds.
+Translate promising methods into concrete benchmark plans with hypotheses and pass/fail thresholds.
 
-## Inputs
+## Contract
 
-- Candidate card
-- Relevance data
-- Data readiness data
-
-## Outputs
-
-- Experiment spec (objective, hypothesis, baseline, variant, metrics, thresholds)
-
-## Implementation Notes
-
-- Returns a `WorkerResult` envelope (see `docs/architecture/worker-contracts.md`)
-- Uses LLM for reasoning — include prompt from `research/prompts/`
+- Input: Structured payload from orchestrator
+- Output: WorkerResult envelope (see `docs/architecture/worker-contracts.md`)

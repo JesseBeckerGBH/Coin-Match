@@ -8,14 +8,11 @@ All workers in the research engine follow a shared input/output contract.
 {
   "worker_name": "string",
   "status": "success | error",
-  "input_ref": "uuid or null — reference to input record",
-  "output_ref": "uuid or null — reference to output record",
+  "input_ref": "uuid or null",
+  "output_ref": "uuid or null",
   "payload": {},
   "errors": [],
-  "metrics": {
-    "duration_ms": 0,
-    "tokens_used": 0
-  }
+  "metrics": {"duration_ms": 0, "tokens_used": 0}
 }
 ```
 

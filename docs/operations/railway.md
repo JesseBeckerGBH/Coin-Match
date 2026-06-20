@@ -11,10 +11,4 @@
 
 ## Environment Variables
 
-Each service reads from `.env` (see `.env.example` files in each domain). Shared config is defined in `shared/config/env_schema.py`.
-
-## Health Checks
-
-- Backend: `GET /health`
-- Frontend: `GET /`
-- Research: `GET /research/health`
+Each service reads from `.env` (see `.env.example`). Shared config defined in `shared/config/env_schema.py`.

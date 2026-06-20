@@ -1,49 +1,26 @@
 """
 Database migration helper for research engine tables.
-
-Usage:
-    python -m research.db.migrations create   # Create tables
-    python -m research.db.migrations drop     # Drop tables (careful!)
+Usage: python -m research.db.migrations create|drop
 """
-import sys
-import os
+import sys, os
 from sqlalchemy import create_engine
 from research.db.models import Base
 
-
 def get_engine():
-    """Create database engine from DATABASE_URL env var."""
     url = os.getenv("DATABASE_URL")
     if not url:
-        print("ERROR: DATABASE_URL environment variable not set")
+        print("ERROR: DATABASE_URL not set")
         sys.exit(1)
     return create_engine(url)
 
-
 def create_tables():
-    """Create all research engine tables."""
-    engine = get_engine()
-    Base.metadata.create_all(engine)
-    print("✅ Research engine tables created successfully")
-
+    Base.metadata.create_all(get_engine())
+    print("Research engine tables created")
 
 def drop_tables():
-    """Drop all research engine tables. Use with caution!"""
-    engine = get_engine()
-    Base.metadata.drop_all(engine)
-    print("⚠️  Research engine tables dropped")
-
+    Base.metadata.drop_all(get_engine())
+    print("Research engine tables dropped")
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python -m research.db.migrations [create|drop]")
-        sys.exit(1)
-
-    command = sys.argv[1]
-    if command == "create":
-        create_tables()
-    elif command == "drop":
-        drop_tables()
-    else:
-        print(f"Unknown command: {command}")
-        sys.exit(1)
+    cmd = sys.argv[1] if len(sys.argv) > 1 else ""
+    {"create": create_tables, "drop": drop_tables}.get(cmd, lambda: print("Usage: create|drop"))()

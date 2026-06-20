@@ -1,6 +1,6 @@
 # CoinMatch Product Positioning
 
-CoinMatch is an AI-powered numismatics marketplace focused on connecting coin collectors, estate sellers, and dealers through instant AI grading and intelligent buyer–seller matching.
+CoinMatch is an AI-powered numismatics marketplace focused on connecting coin collectors, estate sellers, and dealers through instant AI grading and intelligent buyer-seller matching.
 
 ## Segments
 
@@ -14,10 +14,6 @@ CoinMatch is an AI-powered numismatics marketplace focused on connecting coin co
 - Direct matchmaking based on want lists (buyers find sellers, sellers find buyers)
 - Transparent, tiered commission model
 - Math-driven research engine that continuously improves matching accuracy
-
-## Pricing (via Whop)
-
-CoinMatch follows a subscription model for premium features. Free tier for basic identification; paid tiers for advanced grading, matching, and marketplace access.
 
 ## Brand
 

@@ -10,12 +10,5 @@ Rules:
 3. Separate discovery from judgment and judgment from promotion.
 4. Require explicit experiment designs before implementation.
 5. Favor reproducible and explainable improvements over hype.
-6. Produce structured JSON only.
 
-Return:
-- sources_to_fetch
-- candidates_to_score
-- experiments_to_queue
-- candidates_to_reject
-- candidates_to_watch
-- reasons
+Return JSON: sources_to_fetch, candidates_to_score, experiments_to_queue, candidates_to_reject, candidates_to_watch, reasons

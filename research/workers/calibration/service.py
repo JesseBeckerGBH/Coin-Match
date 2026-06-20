@@ -1,7 +1,5 @@
 """
-Calibration Worker
-
-Turn raw model scores into trustworthy probabilities using temperature scaling.
+Calibration Worker — Turn raw model scores into trustworthy probabilities using temperature scaling.
 Type: deterministic
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("calibration")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the calibration worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the calibration worker."""
     logger.info("Running calibration worker...")
 
     # TODO: Implement calibration logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

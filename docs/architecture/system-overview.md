@@ -15,13 +15,13 @@
 
 ```
 User uploads coin image
-  → Frontend sends to Backend API
-    → Backend calls Engine (grading + matching)
-      → Engine uses embeddings + similarity scoring
-        → Results ranked by Bayesian posterior
-          → Calibrated confidence returned to user
+  -> Frontend sends to Backend API
+    -> Backend calls Engine (grading + matching)
+      -> Engine uses embeddings + similarity scoring
+        -> Results ranked by Bayesian posterior
+          -> Calibrated confidence returned to user
 ```
 
-## Research Engine (new)
+## Research Engine
 
 The research engine is a separate pipeline that continuously discovers, evaluates, and promotes new mathematical methods into the production matching system. See `research/README.md` and `docs/architecture/research-engine.md` for details.

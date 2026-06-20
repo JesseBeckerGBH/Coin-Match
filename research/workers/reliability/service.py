@@ -1,7 +1,5 @@
 """
-Reliability Worker
-
-Audit annotation reliability and training-label health using Krippendorff's Alpha.
+Reliability Worker — Audit annotation reliability and training-label health using Krippendorff's Alpha.
 Type: deterministic
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("reliability")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the reliability worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the reliability worker."""
     logger.info("Running reliability worker...")
 
     # TODO: Implement reliability logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

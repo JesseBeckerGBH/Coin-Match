@@ -1,7 +1,5 @@
 """
-Document Fetch Worker
-
-Download, fetch, and normalize source material into clean machine-readable payloads.
+Document Fetch Worker — Download, fetch, and normalize source material into clean machine-readable payloads.
 Type: deterministic
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("document_fetch")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the document_fetch worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the document_fetch worker."""
     logger.info("Running document_fetch worker...")
 
     # TODO: Implement document_fetch logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

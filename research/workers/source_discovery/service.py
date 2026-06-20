@@ -1,7 +1,5 @@
 """
-Source Discovery Worker
-
-Find new candidate material from arXiv, journals, GitHub, blogs, CV papers, statistics sources, and numismatic sources.
+Source Discovery Worker — Find new candidate material from arXiv, journals, GitHub, blogs, CV papers, statistics sources, and numismatic sources.
 Type: hybrid
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("source_discovery")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the source_discovery worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the source_discovery worker."""
     logger.info("Running source_discovery worker...")
 
     # TODO: Implement source_discovery logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

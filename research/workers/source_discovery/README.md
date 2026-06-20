@@ -6,21 +6,7 @@
 
 Find new candidate material from arXiv, journals, GitHub, blogs, CV papers, statistics sources, and numismatic sources.
 
-## Inputs
+## Contract
 
-- Topic list
-- Seed domains
-- Search templates
-- Date windows
-
-## Outputs
-
-- Document URLs
-- Metadata records
-- Freshness score
-- Domain trust score
-
-## Implementation Notes
-
-- Returns a `WorkerResult` envelope (see `docs/architecture/worker-contracts.md`)
-- Uses LLM for reasoning — include prompt from `research/prompts/`
+- Input: Structured payload from orchestrator
+- Output: WorkerResult envelope (see `docs/architecture/worker-contracts.md`)

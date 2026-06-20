@@ -1,7 +1,5 @@
 """
-Fusion Worker
-
-Combine evidence from image embeddings, OCR text, metadata, and physical measurements using Bayesian probabilistic fusion.
+Fusion Worker — Combine evidence from image embeddings, OCR text, metadata using Bayesian probabilistic fusion.
 Type: hybrid
 """
 from typing import Dict, Any
@@ -11,15 +9,7 @@ logger = logging.getLogger("fusion")
 
 
 def run(payload: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Execute the fusion worker.
-
-    Args:
-        payload: Input data from the orchestrator
-
-    Returns:
-        WorkerResult envelope with domain-specific payload
-    """
+    """Execute the fusion worker."""
     logger.info("Running fusion worker...")
 
     # TODO: Implement fusion logic
@@ -31,6 +21,6 @@ def run(payload: Dict[str, Any]) -> Dict[str, Any]:
         "input_ref": None,
         "output_ref": None,
         "payload": {},
-        "errors": ["Worker not yet implemented — Phase 1 skeleton"],
+        "errors": ["Worker not yet implemented - Phase 1 skeleton"],
         "metrics": {}
     }

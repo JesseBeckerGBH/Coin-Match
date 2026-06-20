@@ -6,16 +6,7 @@
 
 Distinguish truly new math from new applications of legacy math.
 
-## Inputs
+## Contract
 
-- Candidate cards
-- Historical candidate database
-
-## Outputs
-
-- Novelty classification (genuinely_new, new_application, known)
-
-## Implementation Notes
-
-- Returns a `WorkerResult` envelope (see `docs/architecture/worker-contracts.md`)
-- Uses LLM for reasoning — include prompt from `research/prompts/`
+- Input: Structured payload from orchestrator
+- Output: WorkerResult envelope (see `docs/architecture/worker-contracts.md`)
