@@ -1,0 +1,12 @@
+name: Task
+description: Concrete implementation task
+labels: ["task"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
