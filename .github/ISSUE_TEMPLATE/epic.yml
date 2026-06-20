@@ -1,0 +1,14 @@
+name: Epic
+description: High-level initiative or project
+labels: ["epic"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One sentence summary of the epic.
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What problem does this epic solve? What is in / out of scope?
